@@ -6,6 +6,7 @@ const path=require("path");
 const multer=require("multer"); 
 const pool = require('../database');
 let orden; 
+
 const  rutimage=path.join(__dirname,"..","files"); 
 
 
@@ -22,15 +23,27 @@ const  rutimage=path.join(__dirname,"..","files");
 
   const  upload=multer({storage:storage}); 
 
-  router.get('/',(req,res)=>{
+  router.get('/',async(req,res)=>{
+     names  = await pool.query("select  nombre from  clientes");
     res.render('links/formularioVentas');
+  });
+  
+  router.get('/busqueda/:id',(req,res)=>{
+      const {id} =  req.params  ;
+     console.log(id);
+      res.render('links/formularioVentas',{nombre:id});
   });
 
   router.post("/add",upload.array('gimg', 12),function (req,res) {
     let data = req.body; 
-    console.log(req.files);
+    res.render('links/formularioVentas'); 
     
-   });
+  });
+  router.get("/busquedaCliente",async(req,res)=>{
+      const  info = await pool.query("SELECT * FROM clientes");
+      console.log(info);
+      res.render('links/busquedaClientes',{info}); 
+  }); 
 
 
 module.exports = router; 

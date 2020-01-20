@@ -25,7 +25,13 @@
       <div class="form-group row">
         <label for="" class="col-sm-2 col-form-label">Cliente:</label>
         <div class="col-sm-6">
-          <input type="text"  class="form-control"  name="cliente" >
+          
+          <input type="text"  class="form-control" value="{{nombre.id}}"  name="cliente" >
+        
+          <a class="btn btn-primary" data-toggle="collapse" href="/ventas/busquedaCliente" role="button" aria-expanded="false" aria-controls="collapseExample">
+
+            Clietes
+         </a>
         </div>
       </div>
 
@@ -65,4 +71,3 @@
       </div>
     </div> 
  </form>
-  <script src="./validations.js"></script>
