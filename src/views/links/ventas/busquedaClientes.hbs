@@ -1,0 +1,27 @@
+<div class="container">
+
+<form action="/ventas/busquedaCliente" method="post" class="form-inline">
+  <div class="form-group mx-sm-3 mb-2">  
+ <label for="search"  >Nombre del Cliente</label>
+ <input type="text" class="form-control"name="search" id="search">
+ </div> 
+ <input type="submit" class="btn btn-primary mb-2" value="Buscar">
+</form>
+<br>
+<table class="table">
+      <thead class="thead-dark">
+    <tr>
+      <th scope="col">NOMBRE</th>
+      <th scope="col">ID</th>
+      <th scope="col">BUSCAR</th>
+    </tr>
+  </thead>
+    {{#each info}}
+    <tr>
+        <td>{{nombre}}</td>
+        <td>{{numero_interno}}</td>
+        <td> <center><a  class="btn btn-primary" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample" href="/ventas/busqueda/{{idcliente}}">Seleccionar</a></center>  </td>
+    </tr>
+    {{/each}}
+</table>
+</div>
