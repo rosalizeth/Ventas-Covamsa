@@ -1,9 +1,15 @@
+<form action="/ventas/busquedaCliente" method="post">
+ <label for="">Nombre del Cliente</label>
+ <input type="text" name="search" id="search">
+ <input type="submit" value="Buscar">
+</form>
+
 <table>
     {{#each info}}
     <tr>
         <td>{{nombre}}</td>
         <td>{{numero_interno}}</td>
-        <td> <a href="/ventas/busqueda/{{nombre}}">Seleccionar</a> </td>
+        <td> <a href="/ventas/busqueda/{{idcliente}}">Seleccionar</a> </td>
     </tr>
     {{/each}}
 </table>
