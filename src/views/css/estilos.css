@@ -4,3 +4,7 @@
     margin-right: 300px;
 
 }
+
+input[type=file].file {
+    color: transparent;
+  }
