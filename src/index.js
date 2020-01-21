@@ -2,8 +2,10 @@ const express = require('express');
 const morgan = require('morgan');
 const exphbs =  require('express-handlebars');
 const path = require('path'); 
+const passport =  require('passport');//para ejecutar codigo 
 // inisialization 
 const app = express();
+require('./lib/passport');
 
 // settings 
 app.set('port',process.env.port|| 3000);
@@ -21,6 +23,8 @@ app.engine('.hbs',exphbs({
 app.set('view engine','.hbs'); //para que funcione las plantillas 
 app.use(express.urlencoded({extended:false}));// sirve para aceptar los datos que me manden los usuarios
 app.use(express.json()); //para aceptar json 
+app.use(passport.initialize());//inicializar pass
+app.use(passport.session());
 // middlewars 
 app.use(morgan('dev')); // se utiliza para ver lo que llega al servidor 
 
