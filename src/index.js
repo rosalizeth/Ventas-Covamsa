@@ -30,7 +30,7 @@ app.use((req,res,next)=>{// se usa para ver que variable son accedidadas desde l
     next(); // toma la infotmacion del usuario 
 });
 // routes 
-
+app.use(require('./routes/login'));
 app.use('/ventas',require('./routes/ventas'));
 
 // Public 

@@ -27,12 +27,13 @@ const storage=multer.diskStorage({
   });
   
 
-  router.post("/add",upload.array('gimg', 12),function (req,res) {
+  router.post("/add",upload.array('gimg', 12), (req,res)=> {
     let data =  JSON.stringify(req.body).toUpperCase();
     let {ORDEN,NUMEROCOTIZACION,RUTA,IMPORTE,OBSERVACIONES} = JSON.parse(data);
-      if( !/^[0-9a-zA-Z]+$/.test(ORDEN) || !/^[0-9a-zA-Z]+$/.test(NUMEROCOTIZACION) ) console.log('hola');
-         
-      
+    if( !/^[0-9a-zA-Z]+$/.test(ORDEN) || !/^[0-9a-zA-Z]+$/.test(NUMEROCOTIZACION) )return  alert('esta mal') ;
+
+
+
     res.render('links/ventas/formularioVentas'); 
     
   });
