@@ -8,6 +8,7 @@ const database ={
     
 }
 
+
 const pool = mysql.createPool(database); //tiene hilos que se van ajecutando y cada uno va haciendo una tarea en ssecuencia 
 pool.getConnection((err,conexion)=>{
     if(err){
