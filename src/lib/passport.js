@@ -8,20 +8,22 @@ passport.use('local.signin',new Strategy({
         passwordField:'password',
         passReqToCallback:true
 },async (req,username,password,done)=>{
- 
-    const rows = await pool.query('select * from acceso where correo = ? ',[username]);
-    if(rows.length > 0){
         
+    const rows = await pool.query('select * from acceso where correo = ? ',[username]);
+    // console.log(rows);
+    
+    if(rows.length > 0){
         const user = rows[0]; 
         const validPassword =  await  helpers.matchPassword(password,user.password); 
         if(validPassword){
-            console.log('vienvenido');
-            done(null,user)
+            done(null,user); 
         } else{
-            done(null,false,)
+            done(null,false); 
         }
     }else{
-        return done(null,false ,)
+       
+        
+        return done(null,false)
     }
 }));
 
