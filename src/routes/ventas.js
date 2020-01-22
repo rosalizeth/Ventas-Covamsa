@@ -27,22 +27,34 @@ const storage=multer.diskStorage({
   });
   
 
-  router.post("/add",upload.array('gimg', 12), (req,res)=> {
+  router.post("/add",upload.array('gimg', 12), async(req,res)=> {
     let data =  JSON.stringify(req.body).toUpperCase();
-    let {ORDEN,NUMEROCOTIZACION,RUTA,IMPORTE,OBSERVACIONES} = JSON.parse(data);
-    if( !/^[0-9a-zA-Z]+$/.test(ORDEN) || !/^[0-9a-zA-Z]+$/.test(NUMEROCOTIZACION) )return  alert('esta mal') ;
-
-
-
-    res.render('links/ventas/formularioVentas'); 
+    let {ORDEN,NUMEROCOTIZACION,RUTA,CLIENTE,IMPORTE,OBSERVACIONES} = JSON.parse(data);
+    if(CLIENTE  === undefined)  return; 
+    const id  =  await pool.query('SELECT idcliente  FROM clientes where nombre   = ?', [CLIENTE] ); 
+    // cambiar al momneto  de tener la sesion
+    console.log(id[0].idcliente);
     
+    
+    let  pedido  = {
+        id_pedido:null, 
+        idcliente: id[0].idcliente,
+        id_empleado : 1, //cambiar cuand0 haga el login
+        orden_de_compra: ORDEN,
+        ruta: RUTA,
+        estatus: 1 ,
+        ruta_pdf_orden_compra: req.files[0].filename
+    
+    }; 
+    if( /^[0-9a-zA-Z]+$/.test(ORDEN) || /^[0-9a-zA-Z]+$/.test(NUMEROCOTIZACION)  )  await pool.query("INSERT INTO  pedidos  set ?", [pedido]);
+      res.render('links/ventas/formularioVentas'); 
   });
 
   router.get('/busqueda/:id',async(req,res)=>{
     const {id} =  req.params;
     const cliente  = await  pool.query('select nombre from clientes where idcliente = ?',[id]);
     res.render('links/ventas/formularioVentas',{cliente});
-});
+  });
 
 router.get("/busquedaCliente",async(req,res)=>{
       const  info = await pool.query("SELECT * FROM clientes ORDER BY nombre ASC");
