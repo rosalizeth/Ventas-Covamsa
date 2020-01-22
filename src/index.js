@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const exphbs =  require('express-handlebars');
 const path = require('path'); 
 const passport =  require('passport');//para ejecutar codigo 
+const session = require('express-session'); 
 // inisialization 
 const app = express();
 require('./lib/passport');
@@ -10,6 +11,7 @@ require('./lib/passport');
 // settings 
 app.set('port',process.env.port|| 3000);
 app.set('views',path.join(__dirname,'views')); 
+
 
 app.set('port',process.env.PORT || 4000);
 app.set('views',path.join(__dirname,'views')); // le dice a node donde esta la carpeta views 
@@ -26,7 +28,12 @@ app.use(express.json()); //para aceptar json
 app.use(passport.initialize());//inicializar pass
 app.use(passport.session());
 // middlewars 
-app.use(morgan('dev')); // se utiliza para ver lo que llega al servidor 
+app.use(morgan('dev')); // se utiliza para ver lo que llega al servidor
+app.use(session({
+    secret: 'secret',
+	resave: true,
+	saveUninitialized: true
+})); 
 
 // Global Variables 
 
