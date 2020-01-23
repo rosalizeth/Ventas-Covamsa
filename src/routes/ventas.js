@@ -5,7 +5,8 @@ const bodyparse=require("body-parser");
 const path=require("path"); 
 const multer=require("multer"); 
 const pool = require('../database');
-let orden; 
+const session  = require('express-session'); 
+
 
 const  rutimage=path.join(__dirname,"..","files");
 
@@ -28,12 +29,15 @@ const storage=multer.diskStorage({
   
 
   router.post("/add",upload.array('gimg', 12), async(req,res)=> {
+   
+    
     let data =  JSON.stringify(req.body).toUpperCase();
     let {ORDEN,NUMEROCOTIZACION,RUTA,CLIENTE,IMPORTE,OBSERVACIONES} = JSON.parse(data);
+    
     if(CLIENTE  === undefined)  return; 
     const id  =  await pool.query('SELECT idcliente  FROM clientes where nombre   = ?', [CLIENTE] ); 
     // cambiar al momneto  de tener la sesion
-    console.log(id[0].idcliente);
+    
     
     
     let  pedido  = {
@@ -63,6 +67,8 @@ router.get("/busquedaCliente",async(req,res)=>{
 }); 
 
 router.post("/busquedaCliente", async(req,res)=>{
+    
+    
   const {search} =  req.body; 
   const  info  = await pool.query("SELECT * FROM clientes  where  nombre like ?",'%'+search+'%');
   res.render('links/ventas/busquedaClientes',{info}); 
