@@ -72,7 +72,9 @@
       <div class="modal-body">
         <div class="col-sm-6">
      
-         Busqueda Cliente <input type="text" name="cliente" id="cliente">
+         Busqueda Cliente <input type="text"  id="serch">
+          <div id="clientesPorBusqueda" ></div>
+          <div id="clientes">
           <table class="table table-bordered-responsive-sm">
            <thead class="thead-light">
            <tr>
@@ -89,7 +91,7 @@
            </tr>
            {{/each}}
          </table>
-        
+        </div>
 
 
         </div>
@@ -144,6 +146,41 @@
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
 <script type=" text/javascript">
+    $('#clientesPorBusqueda').hide(); 
+    $('#serch').keyup(function (e) {  
+     if($('#serch').val()){ 
+        let search = $('#serch').val();
+        let data  = {
+          clientes  : search
+        }
+        $.post("/profile", data,function (data) {
+          console.log(data); 
+            let tabla  = `<table class="table table-bordered-responsive-sm">
+                <thead class="thead-light">
+           <tr>
+             <th scope="col">NOMBRE</th>
+             <th scope="col">ID</th>
+             <th scope="col">BUSCAR</th>
+           </tr>
+         </thead>`; 
+            data.forEach(data => {
+                tabla+= `
+                  <tr>
+                    <td>${data.nombre}</td>
+                    <td>${data.numero_interno}</td>
+                    <td> <button type="button"  onclick="clientes('${data.nombre}')" class="btn btn-secondary" data-dismiss="modal">Seleccionar</button></td>
+                  </tr> 
+                `
+            });
+            tabla  += "</table>"; 
+            $("#clientes").hide(); 
+            $("#clientesPorBusqueda").show();
+            document.getElementById('clientesPorBusqueda').innerHTML  = tabla; 
+            console.log(tabla); 
+              
+        });
+     }
+    }); 
     let clientes = (nombre)=>{
       let mandar  = `<label>Nombre del cliente</label>
       <input type="text" value="${nombre}" name="nombre"> `;

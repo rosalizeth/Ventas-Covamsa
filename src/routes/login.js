@@ -17,12 +17,19 @@ router.post('/signin',(req,res,next)=>{
     })(req,res,next); 
 });
 
+
+
 router.get('/profile',async(req,res)=>{
-      const clientes  = await pool.query("SELECT * FROM clientes");
-      console.log(clientes);
-         
+
+      const clientes  = await pool.query("SELECT * FROM clientes");    
       res.render('links/ventas/formularioVentas',{clientes});
+
 });
+router.post('/profile',async(req,res)=>{
+    console.log(req.body.clientes);
+    const clientes  = await pool.query("SELECT * FROM clientes  where  nombre like ?",'%'+[req.body.clientes]+'%');
+    res.send(clientes)
+}); 
 
 
 // router.post('/',passport.authenticate('local.signup',{

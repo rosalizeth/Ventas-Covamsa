@@ -30,28 +30,28 @@ const storage=multer.diskStorage({
 
   router.post("/add",upload.array('gimg', 12), async(req,res)=> {
     let data =  JSON.stringify(req.body).toUpperCase();
-    let {ORDEN,NUMEROCOTIZACION,RUTA,CLIENTE,IMPORTE,OBSERVACIONES} = JSON.parse(data);
-    console.log(req.body);
+    let {ORDEN,NUMEROCOTIZACION,NOMBRE,CLIENTE,IMPORTE,OBSERVACIONES,RUTA} = JSON.parse(data);
+    console.log(NOMBRE);
     
+    if(NOMBRE  === undefined)  return; 
+    const id  =  await pool.query('SELECT idcliente  FROM clientes where nombre   = ?', [NOMBRE] ); 
+    console.log(id);
     
-    // if(CLIENTE  === undefined)  return; 
-    // const id  =  await pool.query('SELECT idcliente  FROM clientes where nombre   = ?', [CLIENTE] ); 
     // // cambiar al momneto  de tener la sesion
     
+    let  pedido  = {
+        id_pedido:null, 
+        idcliente: id[0].idcliente,
+        id_empleado : 1, //cambiar cuand0 haga el login
+        orden_de_compra: ORDEN,
+        ruta: RUTA,
+        estatus: 1 ,
+        ruta_pdf_orden_compra: req.files[0].filename,
+        cotizacion: NUMEROCOTIZACION
     
-    
-    // let  pedido  = {
-    //     id_pedido:null, 
-    //     idcliente: id[0].idcliente,
-    //     id_empleado : 1, //cambiar cuand0 haga el login
-    //     orden_de_compra: ORDEN,
-    //     ruta: RUTA,
-    //     estatus: 1 ,
-    //     ruta_pdf_orden_compra: req.files[0].filename
-    
-    // }; 
-    // if( /^[0-9a-zA-Z]+$/.test(ORDEN) || /^[0-9a-zA-Z]+$/.test(NUMEROCOTIZACION)  )  await pool.query("INSERT INTO  pedidos  set ?", [pedido]);
-    //   res.render('links/ventas/formularioVentas'); 
+    }; 
+    if( /^[0-9a-zA-Z]+$/.test(ORDEN) || /^[0-9a-zA-Z]+$/.test(NUMEROCOTIZACION)  )  await pool.query("INSERT INTO  pedidos  set ?", [pedido]);
+      res.render('links/ventas/formularioVentas'); 
   });
 
   router.get('/busqueda/:id',async(req,res)=>{
@@ -66,13 +66,5 @@ router.get("/busquedaCliente",async(req,res)=>{
       res.render('links/ventas//busquedaClientes',{info}); 
 }); 
 
-router.post("/busquedaCliente", async(req,res)=>{
-    
-    
-  const {search} =  req.body; 
-  const  info  = await pool.query("SELECT * FROM clientes  where  nombre like ?",'%'+search+'%');
-  res.render('links/ventas/busquedaClientes',{info}); 
-  
-}); 
 
 module.exports = router; 
