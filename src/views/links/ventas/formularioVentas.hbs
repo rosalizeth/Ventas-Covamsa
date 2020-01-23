@@ -1,10 +1,12 @@
+
+
 {{!-- formulario para dar de alta un pedido con los campos que se requieren segun las especificaciones dichas anteriormente --}}
 <form action="/ventas/add" enctype="multipart/form-data" method="post" id="imgct" class="columinput">
    <div class="container">
       <div class="form-group row  justify-content-center ">
         <label for="oc" class="col-sm-2 col-form-label">Orden de Compra:</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control valid border border-secondary" name="orden" title="Campo Obligatorio"required>
+          <input type="text" class="form-control valid border border-secondary" name="orden" pattern="[a-zA-Z]+[0-9]+" title="Campo Obligatorio"required>
           {{!-- documento --}}
           {{!-- <div class="container"> --}}
             {{!-- <label>
@@ -117,11 +119,11 @@
         <div class="col-sm-6">
           <div class="input-group-prepend">
           <span class="input-group-text border border-secondary" >$</span>
-          <input type="number"  class="form-control border border-secondary" name="importe" required >
+          <input type="number"  class="form-control border border-secondary" name="importe" required pattern="[0-9]{1,2}"  >
         </div>
         </div>
       </div>
-
+{{!-- pattern de importe validacion un numero entero decimal entre 1 y 2 digitos  --}}
       <div class="form-group row justify-content-center">
         <label for="" class="col-sm-2 col-form-label" >Observaciones:</label>
         <div class="col-sm-6">
