@@ -23,13 +23,14 @@ const storage=multer.diskStorage({
   const  upload=multer({storage:storage}); 
 
   router.get('/',async(req,res)=>{
-     names  = await pool.query("select  nombre from  clientes");
+    //  names  = await pool.query("select * from clientes ");
     res.render('links/ventas/formularioVentas');
   });
   
 
   router.post("/add",upload.array('gimg', 12), async(req,res)=> {
    
+    
     
     let data =  JSON.stringify(req.body).toUpperCase();
     let {ORDEN,NUMEROCOTIZACION,RUTA,CLIENTE,IMPORTE,OBSERVACIONES} = JSON.parse(data);

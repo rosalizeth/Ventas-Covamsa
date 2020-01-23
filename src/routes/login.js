@@ -17,8 +17,11 @@ router.post('/signin',(req,res,next)=>{
     })(req,res,next); 
 });
 
-router.get('/profile',(req,res)=>{
-        res.render('links/ventas/formularioVentas');
+router.get('/profile',async(req,res)=>{
+      const clientes  = await pool.query("SELECT * FROM clientes");
+      console.log(clientes);
+         
+      res.render('links/ventas/formularioVentas',{clientes});
 });
 
 
