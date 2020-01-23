@@ -35,7 +35,12 @@
       </div>
 
       <br>
+      <center>
+       <div id="inputCliente"></div> 
+      </center> 
+       <br>
       <div class="form-group row justify-content-center">
+       
         <label for="" class="col-sm-2 col-form-label">Cliente:</label>
         <div class="col-sm-6">
           {{#each cliente }}
@@ -53,7 +58,7 @@
         </div>
       </div>
 
-
+    
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -66,14 +71,32 @@
       </div>
       <div class="modal-body">
         <div class="col-sm-6">
-          {{#each cliente }}
-          <input type="text"  class="form-control border border-secondary" value="{{nombre}}" name="cliente" >
-          {{/each}}
+     
+         Busqueda Cliente <input type="text" name="cliente" id="cliente">
+          <table class="table table-bordered-responsive-sm">
+           <thead class="thead-light">
+           <tr>
+             <th scope="col">NOMBRE</th>
+             <th scope="col">ID</th>
+             <th scope="col">BUSCAR</th>
+           </tr>
+         </thead>
+           {{#each clientes}}
+           <tr>
+               <td>{{nombre}}</td>
+               <td>{{numero_interno}}</td>
+               <td> <center> <button type="button"  onclick="clientes('{{nombre}}')" class="btn btn-secondary" data-dismiss="modal">Seleccionar</button> </center>  </td>
+           </tr>
+           {{/each}}
+         </table>
+        
+
+
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Selecciona</button>
+        
+        {{!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Selecciona</button> --}}
       </div>
     </div>
   </div>
@@ -116,3 +139,15 @@
       </div>
     </div> 
  </form>
+ <script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+<script type=" text/javascript">
+    let clientes = (nombre)=>{
+      let mandar  = `<label>Nombre del cliente</label>
+      <input type="text" value="${nombre}" name="nombre"> `;
+      document.getElementById('inputCliente').innerHTML =  mandar; 
+
+    }
+</script>

@@ -7,30 +7,23 @@ passport.use('local.signin', new Strategy({
         usernameField:'email',
         passwordField: 'password',
         passReqToCallback: true 
-}, async(req,email,password,done)=>{
-        // console.log(req.session.hola);
+}, async(req,email,password,done)=>{ 
         
-        const rows =   await pool.query("SELECT * FROM  acceso WHERE  correo = ?  and password = ? ",[email,password]); 
+    const rows =   await pool.query("SELECT * FROM  acceso WHERE  correo = ?  and password = ? ",[email,password]); 
    if(rows.length > 0){
        const user = rows[0]; 
-      
         // const validPassword =   await helpers.matchPassword(password,user.password); validar contraseña convertida 
         done(null,user)
    }else{
-           done(null,false); 
+        done(null,false); 
    }
 })); 
+
 passport.serializeUser((user, done)=> {
-        
-        done(null, user);
-        console.log(user);
-        
+        done(null, user.idacceso);
 });
-      
 passport.deserializeUser( async (id, done)=> {
-        console.log(id);
         const rows =   await pool.query('select * from acceso where idacceso = ?',[id]); 
-        console.log(rows);  
         done(null, rows[0]);
 });
 

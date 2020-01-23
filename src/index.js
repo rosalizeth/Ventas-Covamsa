@@ -1,12 +1,13 @@
 const express = require('express');
 const morgan = require('morgan');
-const exphbs =  require('express-handlebars');
-const path = require('path'); 
-const passport =  require('passport');//para ejecutar codigo 
-const session = require('express-session'); 
-const mysqlSession = require('express-mysql-session');
-const {database}  = require('./database')
-// inisialization 
+const path = require('path');
+const exphbs = require('express-handlebars');
+const session = require('express-session');
+const passport = require('passport');
+const flash = require('connect-flash');
+const MySQLStore = require('express-mysql-session')(session);
+const bodyParser = require('body-parser');
+const {database} = require('./database'); 
 const app = express();
 require('./lib/passport');
 
@@ -31,20 +32,23 @@ app.set('view engine','.hbs'); //para que funcione las plantillas
 app.use(express.urlencoded({extended:false}));// sirve para aceptar los datos que me manden los usuarios
 app.use(express.json()); //para aceptar json 
 app.use(passport.initialize());//inicializar pass
+app.use(express({secret: 'mySecretKey'}));
+app.use(flash());
 app.use(passport.session());
-// app.use(express.cookieParser());
+// app.use(session({
+//     secret: 'faztmysqlnodemysql',
+//     resave: false,
+//     saveUninitialized: false,
+//     store: new MySQLStore(database)
+//   }));
 
 app.use(morgan('dev')); // se utiliza para ver lo que llega al servidor
-// app.use(session({
-//     secret: 'secret',
-// 	resave: true,
-// 	saveUninitialized: true
-// })); 
+
+
 
 // Global Variables 
 app.use((req,res,next)=>{// se usa para ver que variable son accedidadas desde la aplicación 
-    
-
+        app.locals.user  = req.use
     next(); // toma la infotmacion del usuario 
 });
 // routes 
@@ -54,6 +58,7 @@ app.use('/ventas',require('./routes/ventas'));
 // Public 
 app.use(express.static(path.join(__dirname,'public')));
 // Starting server 
+
 // so existe un puerto 
 app.listen(app.get('port'),()=>{
 console.log('server on port ',app.get('port'));
