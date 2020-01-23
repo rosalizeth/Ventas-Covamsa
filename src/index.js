@@ -4,6 +4,8 @@ const exphbs =  require('express-handlebars');
 const path = require('path'); 
 const passport =  require('passport');//para ejecutar codigo 
 const session = require('express-session'); 
+const mysqlSession = require('express-mysql-session');
+const {database}  = require('./database')
 // inisialization 
 const app = express();
 require('./lib/passport');
@@ -15,6 +17,9 @@ app.set('views',path.join(__dirname,'views'));
 
 app.set('port',process.env.PORT || 4000);
 app.set('views',path.join(__dirname,'views')); // le dice a node donde esta la carpeta views 
+// middlewars 
+
+
 app.engine('.hbs',exphbs({
     defaultLayout: 'main',
     layoutsDir: path.join(app.get('views'),'layouts'), //unir directorios
@@ -27,17 +32,19 @@ app.use(express.urlencoded({extended:false}));// sirve para aceptar los datos qu
 app.use(express.json()); //para aceptar json 
 app.use(passport.initialize());//inicializar pass
 app.use(passport.session());
-// middlewars 
+// app.use(express.cookieParser());
+
 app.use(morgan('dev')); // se utiliza para ver lo que llega al servidor
-app.use(session({
-    secret: 'secret',
-	resave: true,
-	saveUninitialized: true
-})); 
+// app.use(session({
+//     secret: 'secret',
+// 	resave: true,
+// 	saveUninitialized: true
+// })); 
 
 // Global Variables 
-
 app.use((req,res,next)=>{// se usa para ver que variable son accedidadas desde la aplicación 
+    
+
     next(); // toma la infotmacion del usuario 
 });
 // routes 
