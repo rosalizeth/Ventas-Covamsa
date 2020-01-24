@@ -201,7 +201,7 @@
                   <tr>
                     <td>${data.nombre}</td>
                     <td>${data.numero_interno}</td>
-                    <td> <button type="button"  onclick="clientes('${data.nombre}')" class="btn btn-success" data-dismiss="modal">Seleccionar</button></td>
+                    <td><button type="button" onclick="clientes('${data.nombre}')" class="btn btn-success" data-dismiss="modal">Seleccionar</button></td>
                   </tr> 
                 `
             });
@@ -215,18 +215,17 @@
      }
     }); 
 
-   
     let clientes = (nombre)=>{
       let mandar  = `
- 
-        <div class="form-group row">
-        <div class="col-sm-8">
-        <label for="" class="col-form-label">Nombre del cliente:</label>
-        <input type="text"  value="${nombre}" name="nombre">
+
+        <div class="form-group ">
+        {{!-- <div class="col-6"> --}}
+        <label for="" class="col-sm-2 col-label">Tu Cliente:</label>
+        <input type="text" class="form-control border border-secondary" value="${nombre}" name="nombre">
         </div>
         </div>
+    
      `;
       document.getElementById('inputCliente').innerHTML =  mandar; 
-
     }
 </script>
