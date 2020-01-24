@@ -8,8 +8,7 @@ passport.use('local.signin', new Strategy({
         passwordField: 'password',
         passReqToCallback: true 
 }, async(req,email,password,done)=>{ 
-        
-    const rows =   await pool.query("SELECT * FROM  acceso WHERE  correo = ?  and password = ? ",[email,password]); 
+   const rows =   await pool.query("SELECT * FROM  acceso WHERE  correo = ?  and password = ? ",[email,password]); 
    if(rows.length > 0){
        const user = rows[0]; 
         // const validPassword =   await helpers.matchPassword(password,user.password); validar contraseña convertida 
@@ -23,7 +22,8 @@ passport.serializeUser((user, done)=> {
         done(null, user.idacceso);
 });
 passport.deserializeUser( async (id, done)=> {
-        const rows =   await pool.query('select * from acceso where idacceso = ?',[id]); 
+        const rows =   await pool.query('select * from acceso where idacceso = ?',[id]);
+        console.log(rows);
         done(null, rows[0]);
 });
 
