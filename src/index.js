@@ -48,7 +48,6 @@ app.use(morgan('dev')); // se utiliza para ver lo que llega al servidor
 
 // Global Variables 
 app.use((req,res,next)=>{// se usa para ver que variable son accedidadas desde la aplicación 
-        app.locals.user  = req.use
     next(); // toma la infotmacion del usuario 
 });
 // routes 
@@ -63,4 +62,4 @@ app.use(express.static(path.join(__dirname,'public')));
 app.listen(app.get('port'),()=>{
 console.log('server on port ',app.get('port'));
 }); 
-    
+
