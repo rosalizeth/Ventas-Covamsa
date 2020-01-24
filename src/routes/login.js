@@ -6,14 +6,14 @@ const multer=require("multer");
 const pool = require('../database')
 const  passport =  require('passport');
 
-router.get('/signin',(req,res)=>{
+router.get('/',(req,res)=>{
     res.render('links/login/login');
 });
 
-router.post('/signin',(req,res,next)=>{
+router.post('/',(req,res,next)=>{
     passport.authenticate('local.signin',{
         successRedirect: '/profile',
-        failureRedirect:'/signin'
+        failureRedirect:'/'
     })(req,res,next); 
 });
 
