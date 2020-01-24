@@ -62,7 +62,7 @@
       <div class="form-group row justify-content-center">
         <label for="" class="col-sm-2 col-form-label">No. de Cotizacion:</label>
         <div class="col-sm-6">
-          <input type="text"  class="form-control valid border border-secondary" name="numeroCotizacion"  title="Campo Obligatorio" required>
+          <input type="text"  class="form-control valid border border-secondary" name="numeroCotizacion" pattern="[0-9]{1,9}" title="Campo Obligatorio" required>
           {{!-- <div class="container"> --}}
             <input type="file" class="form-control-file " name="gimg" id="gimg" style="color: black;" required>
           {{!-- </div> --}}
@@ -104,31 +104,29 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <div class="col-sm-6">
-     
-         Busqueda Cliente <input type="text"  id="serch">
-          <div id="clientesPorBusqueda" ></div>
-          <div id="clientes">
-          <table class="table table-bordered-responsive-sm">
+      <div class="modal-bodyss">
+          {{!-- <div class="col-sm-6"> --}}
+          <center>Busqueda Cliente: <input type="text"  id="serch" class="col-sm-8 "></center>
+          <div id="clientesPorBusqueda"></div>
+          <div id="clientes"><br>
+
+          <table class="table table-bordered-responsive-sm justify-content-center">
            <thead class="thead-light">
            <tr>
              <th scope="col">NOMBRE</th>
              <th scope="col">ID</th>
              <th scope="col">BUSCAR</th>
            </tr>
-         </thead>
+         </thead >
            {{#each clientes}}
            <tr>
                <td>{{nombre}}</td>
                <td>{{numero_interno}}</td>
-               <td> <center> <button type="button"  onclick="clientes('{{nombre}}')" class="btn btn-secondary" data-dismiss="modal">Seleccionar</button> </center>  </td>
+               <td> <center> <button type="button"  onclick="clientes('{{nombre}}')" class="btn btn-success" data-dismiss="modal">Seleccionar</button></center></td>
            </tr>
            {{/each}}
          </table>
         </div>
-
-
         </div>
       </div>
       <div class="modal-footer">
@@ -139,6 +137,7 @@
   </div>
 </div>
 
+<div class="container">
       <div class="form-group row justify-content-center">
         <label for=""  class="col-sm-2 col-form-label ">Ruta:</label>
         <div class="col-sm-6">
@@ -149,21 +148,21 @@
         </div>
       </div> 
 
-
       <div class="form-group row justify-content-center">
         <label for="" class="col-sm-2 col-form-label">Importe:</label>
         <div class="col-sm-6">
           <div class="input-group-prepend">
           <span class="input-group-text border border-secondary" >$</span>
-          <input type="number"  class="form-control border border-secondary" name="importe" required pattern="[0-9]{1,2}"  >
+          <input type="text"  class="form-control border border-secondary" name="importe" required >
         </div>
         </div>
       </div>
+      
 {{!-- pattern de importe validacion un numero entero decimal entre 1 y 2 digitos  --}}
       <div class="form-group row justify-content-center">
         <label for="" class="col-sm-2 col-form-label" >Observaciones:</label>
         <div class="col-sm-6">
-        <textarea class="form-control border border-secondary"  name="observaciones" title="En caso de ques sea necesario poner observaciones" rows="4"></textarea>
+        <textarea class="form-control border border-secondary"  name="observaciones" title="En caso de ques sea necesario poner observaciones" rows="2"></textarea>
       </div>
       </div>
       <br>
@@ -202,7 +201,7 @@
                   <tr>
                     <td>${data.nombre}</td>
                     <td>${data.numero_interno}</td>
-                    <td> <button type="button"  onclick="clientes('${data.nombre}')" class="btn btn-secondary" data-dismiss="modal">Seleccionar</button></td>
+                    <td> <button type="button"  onclick="clientes('${data.nombre}')" class="btn btn-success" data-dismiss="modal">Seleccionar</button></td>
                   </tr> 
                 `
             });
@@ -218,8 +217,16 @@
 
    
     let clientes = (nombre)=>{
-      let mandar  = `<label>Nombre del cliente</label>
-      <input type="text" value="${nombre}" name="nombre"> `;
+      let mandar  = `
+      
+ 
+        <div class="container">
+        <div class="form-group row">
+        <div class="col-sm-8">
+        <label for="" class="col-sm-6 col-form-label">Nombre del cliente:</label>
+        <input type="text" class="form-control" size="" value="${nombre}" name="nombre" class="">
+        </div>
+        </div> `;
       document.getElementById('inputCliente').innerHTML =  mandar; 
 
     }
