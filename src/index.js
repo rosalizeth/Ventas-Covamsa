@@ -52,7 +52,7 @@ app.use((req,res,next)=>{// se usa para ver que variable son accedidadas desde l
 });
 // routes 
 app.use(require('./routes/login'));
-app.use('/ventas',require('./routes/ventas'));
+app.use('/ventas',require('./routes/ventas/ventas'));
 
 
 // Public 

@@ -4,7 +4,7 @@ const router =  express.Router();
 const bodyparse=require("body-parser"); 
 const path=require("path"); 
 const multer=require("multer"); 
-const pool = require('../database');
+const pool = require('../../database');
 const session  = require('express-session');
 const {format} = require('fecha');  
 
