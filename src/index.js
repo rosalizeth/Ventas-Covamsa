@@ -54,6 +54,7 @@ app.use((req,res,next)=>{// se usa para ver que variable son accedidadas desde l
 app.use(require('./routes/login'));
 app.use('/ventas',require('./routes/ventas'));
 
+
 // Public 
 app.use(express.static(path.join(__dirname,'public')));
 // Starting server 
