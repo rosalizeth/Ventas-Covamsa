@@ -9,7 +9,7 @@ const session  = require('express-session');
 const {format} = require('fecha');  
 
 
-const  rutimage=path.join(__dirname,"..","files");
+const  rutimage=path.join(__dirname,"../../files");
 
 const storage=multer.diskStorage({
    destination:function (res,file,cb) {

@@ -12,11 +12,11 @@ const app = express();
 require('./lib/passport');
 
 // settings 
-app.set('port',process.env.port|| 3000);
+app.set('port',process.env.port|| 4000);
 app.set('views',path.join(__dirname,'views')); 
 
 
-app.set('port',process.env.PORT || 4000);
+// app.set('port',process.env.PORT || 4000);
 app.set('views',path.join(__dirname,'views')); // le dice a node donde esta la carpeta views 
 // middlewars 
 
@@ -35,12 +35,10 @@ app.use(passport.initialize());//inicializar pass
 app.use(express({secret: 'mySecretKey'}));
 app.use(flash());
 app.use(passport.session());
-// app.use(session({
-//     secret: 'faztmysqlnodemysql',
-//     resave: false,
-//     saveUninitialized: false,
-//     store: new MySQLStore(database)
-//   }));
+
+// app.get('/',(res,req)=>{
+
+// })
 
 app.use(morgan('dev')); // se utiliza para ver lo que llega al servidor
 
@@ -52,7 +50,7 @@ app.use((req,res,next)=>{// se usa para ver que variable son accedidadas desde l
 });
 // routes 
 app.use(require('./routes/login'));
-app.use('/ventas',require('./routes/ventas/ventas'));
+app.use('/ventas',require('./routes/ventas/ventas')); 
 
 // Public 
 app.use(express.static(path.join(__dirname,'public')));
