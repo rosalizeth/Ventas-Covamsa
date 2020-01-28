@@ -73,7 +73,7 @@
           </a> --}}
 
         {{!-- ventana emergente para Cliente --}}
-        <button type="button" class="btn btn-light btn-lg btn-block " data-toggle="modal" data-target="#staticBackdrop"  href="/ventas/busquedaCliente" role="button" aria-expanded="false" aria-controls="collapseExample">
+        <button type="button" class="btn btn-dark btn-lg btn-block " data-toggle="modal" data-target="#staticBackdrop"  href="/ventas/busquedaCliente" role="button" aria-expanded="false" aria-controls="collapseExample">
         Tus Clientes
         </button>
         </div>
@@ -204,10 +204,12 @@
     let clientes = (nombre)=>{
       let mandar  = `
 
-        <div class="form-group block">
-        <div class="col-sm-4">
-        <label for="" class="col-0">Tu Cliente:</label>
-        <input type="text" class="form-control border border-secondary"  value="${nombre}" name="nombre">
+        <div class="form-group">
+        <div class="col-md-8 col-lg-4">
+        <label for="" class="col-0" >Tu Cliente:</label>
+        <div class="col-xs-1">
+        <input type="text" class="form-control border border-secondary" value="${nombre}" name="nombre">
+        </div>
         </div>
         </div>
     
