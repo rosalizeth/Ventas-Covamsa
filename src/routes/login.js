@@ -28,6 +28,10 @@ router.post('/profile',async(req,res)=>{
     const clientes  = await pool.query("SELECT * FROM clientes  where  nombre like ?",'%'+[req.body.clientes]+'%');
     res.send(clientes)
 }); 
+router.get('/logout',(req,res)=>{
+    req.logOut(); 
+    res.redirect('/'); 
+}); 
 
 
 // router.post('/',passport.authenticate('local.signup',{

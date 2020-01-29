@@ -5,9 +5,10 @@ const exphbs = require('express-handlebars');
 const session = require('express-session');
 const passport = require('passport');
 const flash = require('connect-flash');
-const MySQLStore = require('express-mysql-session')(session);
+const MySQLStore = require('express-mysql-session');
 const bodyParser = require('body-parser');
-const {database} = require('./database'); 
+const {database} = require('./key');
+//  cambiar conexion en la  otras areas  
 const app = express();
 require('./lib/passport');
 
@@ -28,17 +29,18 @@ app.engine('.hbs',exphbs({
     extname: '.hbs',//como  van a terminar mis archivos 
     helpers: require('./lib/handlebars')
 }));
+app.use(flash());
+app.use(session({
+    secret: 'mysqlcovamsa',
+    resave:false,
+    saveUninitialized:false,
+    store: new MySQLStore(database)
+}));
 app.set('view engine','.hbs'); //para que funcione las plantillas 
 app.use(express.urlencoded({extended:false}));// sirve para aceptar los datos que me manden los usuarios
 app.use(express.json()); //para aceptar json 
 app.use(passport.initialize());//inicializar pass
-app.use(express({secret: 'mySecretKey'}));
-app.use(flash());
 app.use(passport.session());
-
-// app.get('/',(res,req)=>{
-
-// })
 
 app.use(morgan('dev')); // se utiliza para ver lo que llega al servidor
 
@@ -46,6 +48,8 @@ app.use(morgan('dev')); // se utiliza para ver lo que llega al servidor
 
 // Global Variables 
 app.use((req,res,next)=>{// se usa para ver que variable son accedidadas desde la aplicación 
+   app.locals.success  = req.flash('success');
+   app.locals.user  =req.user; 
     next(); // toma la infotmacion del usuario 
 });
 // routes 
