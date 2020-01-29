@@ -1,10 +1,8 @@
 const express=require("express"); 
 const router =  express.Router(); 
-const bodyparse=require("body-parser"); 
-const path=require("path"); 
-const multer=require("multer"); 
 const pool = require('../database')
 const  passport =  require('passport');
+const {isLoggedIn}= require('../lib/auth');
 
 router.get('/',(req,res)=>{
     res.render('links/login/login');
@@ -17,7 +15,7 @@ router.post('/',(req,res,next)=>{
     })(req,res,next); 
 });
 
-router.get('/profile',async(req,res)=>{
+router.get('/profile',isLoggedIn ,async(req,res)=>{
 
       const clientes  = await pool.query("SELECT * FROM clientes");    
       res.render('links/ventas/formularioVentas',{clientes});

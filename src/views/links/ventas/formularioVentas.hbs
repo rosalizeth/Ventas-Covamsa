@@ -25,14 +25,12 @@
             <li class="nav-item">
               <a class="nav-link text-white text-uppercase ml-5 font-italic" href="#">Busqueda de Orden de Compra</a>
             </li>
-              <li class="nav-item">
-              <a class="nav-link text-white text-uppercase ml-5 font-italic" href="/logout">Cerrar Sesión</a>
+             <li class="nav-item">
+              <a class="nav-link text-white text-uppercase ml-5 font-italic" href="/">Cerrar Sesion</a>
             </li>
          </ul>
         </div>
     </nav><br>
-
-
 {{!-- formulario para dar de alta un pedido con los campos que se requieren segun las especificaciones dichas anteriormente --}}
 <form action="/ventas/add" enctype="multipart/form-data" method="post" id="imgct" class="columinput">
    <div class="container">
@@ -206,22 +204,16 @@
 
     let clientes = (nombre)=>{
       let mandar  = `
-        {{!-- <div class="container"> --}}
-        <div class="form-group row justify-content-center ">
-        <label for="" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-6">
-          <input type="text"  class="form-control valid border border-secondary" value="${nombre}" name="nombre" >
+
+        <div class="form-group">
+        <div class="col-lg-7 ">
+        <label for="" class="col-sm-10">Tu Cliente:</label>
+        <div class="col-xl-7" style="alight=right">
+        <input type="text" class="form-control border border-secondary" value="${nombre}" name="nombre">
         </div>
         </div>
         </div>
-        {{!-- </div> --}}
-
-
-      {{!-- es la parte chida --}}
-      {{!-- <label for="">Tu Cliente:</label>
-      <input type="text" value="${nombre}" name="nombre"> --}}
- 
-
+    
      `;
       document.getElementById('inputCliente').innerHTML =  mandar; 
     }
