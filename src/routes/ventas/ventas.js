@@ -34,6 +34,8 @@ const storage=multer.diskStorage({
   });
 
   router.post("/add",upload.array('gimg', 12), async(req,res)=> {
+    console.log(req.user.idacceso);
+    
     let data =  JSON.stringify(req.body).toUpperCase();
     let {ORDEN,NUMEROCOTIZACION,NOMBRE,IMPORTE,OBSERVACIONES,RUTA} = JSON.parse(data);
     if(NOMBRE  === undefined)  return; 
@@ -63,6 +65,7 @@ const storage=multer.diskStorage({
           estatus: 1
         }
         await pool.query("INSERT INTO informacion_pedido set ?",[infoPedido]);
+        req.flash('success','Pedido Guardado' ); 
         res.redirect('/ventas')  ; 
       }
   });

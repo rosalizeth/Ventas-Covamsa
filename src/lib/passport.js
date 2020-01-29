@@ -1,7 +1,6 @@
 const  passport =  require('passport');// para autentificaciones
 const Strategy = require('passport-local').Strategy; 
 const pool = require('../database');
-const session = require('express-session')
 
 passport.use('local.signin', new Strategy({
         usernameField:'email',
@@ -23,7 +22,6 @@ passport.serializeUser((user, done)=> {
 });
 passport.deserializeUser( async (id, done)=> {
         const rows =   await pool.query('select * from acceso where idacceso = ?',[id]);
-        console.log(rows);
         done(null, rows[0]);
 });
 
