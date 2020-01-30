@@ -1,11 +1,10 @@
 
 const express=require("express"); 
 const router =  express.Router(); 
-const bodyparse=require("body-parser"); 
 const path=require("path"); 
 const multer=require("multer"); 
 const pool = require('../../database');
-const session  = require('express-session');
+const {isLoggedIn}= require('../../lib/auth');
 const {format} = require('fecha');  
 
 
@@ -23,8 +22,8 @@ const storage=multer.diskStorage({
 
   const  upload=multer({storage:storage}); 
 
-  router.get('/',async(req,res)=>{
-    const clientes  = await pool.query("SELECT * FROM clientes");    
+  router.get('/',isLoggedIn,async(req,res)=>{
+    const clientes  = await pool.query("select * from  empleados a inner join clientes b using(id_empleados) where a.idacceso = ?",[req.user.idacceso]);    
     res.render('links/ventas/formularioVentas',{clientes});
   });
   
@@ -34,16 +33,18 @@ const storage=multer.diskStorage({
   });
 
   router.post("/add",upload.array('gimg', 12), async(req,res)=> {
-    console.log(req.user.idacceso);
-    
+
     let data =  JSON.stringify(req.body).toUpperCase();
     let {ORDEN,NUMEROCOTIZACION,NOMBRE,IMPORTE,OBSERVACIONES,RUTA} = JSON.parse(data);
     if(NOMBRE  === undefined)  return; 
     const id  =  await pool.query('SELECT idcliente  FROM clientes where nombre   = ?', [NOMBRE] ); 
+    const idEmpleado  = await  pool.query('SELECT id_empleados from empleados WHERE idacceso  = ?',[req.user.idacceso]);    
+    // console.log(idEmpleado.id_empleado);
+    
     let  pedido  = {
         id_pedido:null, 
         idcliente: id[0].idcliente,
-        id_empleado : 1, //cambiar cuand0 haga el login
+        id_empleado : idEmpleado[0].id_empleado , //cambiar cuand0 haga el login
         orden_de_compra: ORDEN,
         ruta: RUTA,
         estatus: 1 ,
@@ -51,6 +52,8 @@ const storage=multer.diskStorage({
         cotizacion: NUMEROCOTIZACION,
         ruta_pdf_cotizacion: req.files[1].filename
         }; 
+        console.log(pedido);
+        
 
    if( /^[0-9a-zA-Z]+$/.test(ORDEN) || /^[0-9a-zA-Z]+$/.test(NUMEROCOTIZACION)) {
          await pool.query("INSERT INTO  pedidos  set ?", [pedido]);
