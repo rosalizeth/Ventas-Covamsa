@@ -38,10 +38,13 @@ const storage=multer.diskStorage({
     let {ORDEN,NUMEROCOTIZACION,NOMBRE,IMPORTE,OBSERVACIONES,RUTA} = JSON.parse(data);
     if(NOMBRE  === undefined)  return; 
     const id  =  await pool.query('SELECT idcliente  FROM clientes where nombre   = ?', [NOMBRE] ); 
+    const idEmpleado  = await  pool.query('SELECT id_empleados from empleados WHERE idacceso  = ?',[req.user.idacceso]);    
+    // console.log(idEmpleado.id_empleado);
+    
     let  pedido  = {
         id_pedido:null, 
         idcliente: id[0].idcliente,
-        id_empleado :  await  pool.query('SELECT id_empleados from empleados WHERE idacceso  = ?',[req.user.idacceso]) , //cambiar cuand0 haga el login
+        id_empleado : idEmpleado[0].id_empleado , //cambiar cuand0 haga el login
         orden_de_compra: ORDEN,
         ruta: RUTA,
         estatus: 1 ,
@@ -49,6 +52,8 @@ const storage=multer.diskStorage({
         cotizacion: NUMEROCOTIZACION,
         ruta_pdf_cotizacion: req.files[1].filename
         }; 
+        console.log(pedido);
+        
 
    if( /^[0-9a-zA-Z]+$/.test(ORDEN) || /^[0-9a-zA-Z]+$/.test(NUMEROCOTIZACION)) {
          await pool.query("INSERT INTO  pedidos  set ?", [pedido]);
