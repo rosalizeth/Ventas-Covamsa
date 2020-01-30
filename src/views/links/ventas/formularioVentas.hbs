@@ -45,8 +45,7 @@
         <label for="oc" class="col-sm-2 col-form-label">Orden de Compra:</label>
         <div class="col-sm-6">
           <input type="text" class="form-control valid border border-secondary" name="orden" pattern="[A-Za-z0-9]+" title="Campo Obligatorio"required>
-
-              <input type="file" id="gimg" name="gimg" class="form-control-file" style="color: black" required /></center>
+            <input type="file" id="gimg" name="gimg" class="form-control-file" style="color: black"/></center>
         </div>
       </div>
       <div >
@@ -68,8 +67,7 @@
        <div id="inputCliente"></div> 
       </center> 
      
-      <div class="form-group row justify-content-center">
-       
+      <div class="form-group row justify-content-center"> 
         <label for="" class="col-sm-2 col-form-label">Cliente:</label>
         <div class="col-sm-6">
           {{#each cliente }}
@@ -123,9 +121,7 @@
         </div>
         </div>
       </div>
-      <div class="modal-footer">
-        
-        {{!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Selecciona</button> --}}
+      <div class="modal-footer">        
       </div>
     </div>
   </div>
@@ -152,7 +148,6 @@
         </div>
       </div>
       
-{{!-- pattern de importe validacion un numero entero decimal entre 1 y 2 digitos  --}}
       <div class="form-group row justify-content-center">
         <label for="" class="col-sm-2 col-form-label" >Observaciones:</label>
         <div class="col-sm-6">
@@ -211,23 +206,16 @@
 
     let clientes = (nombre)=>{
       let mandar  = `
-  
         <div class="form-group row justify-content-center ">
         <label for="" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-6">
-          <input type="text"  class="form-control valid border border-secondary" value="${nombre}" name="nombre" >
+          <input type="text"  class="form-control valid border border-secondary" value="${nombre}" name="nombre">
         </div>
         </div>
         </div>
-      
-
-
-      {{!-- es la parte chida --}}
-      {{!-- <label for="">Tu Cliente:</label>
-      <input type="text" value="${nombre}" name="nombre"> --}}
- 
-
      `;
       document.getElementById('inputCliente').innerHTML =  mandar; 
     }
 </script>
+
+
