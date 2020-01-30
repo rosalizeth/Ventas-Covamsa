@@ -39,12 +39,12 @@ const storage=multer.diskStorage({
     if(NOMBRE  === undefined)  return; 
     const id  =  await pool.query('SELECT idcliente  FROM clientes where nombre   = ?', [NOMBRE] ); 
     const idEmpleado  = await  pool.query('SELECT id_empleados from empleados WHERE idacceso  = ?',[req.user.idacceso]);    
-    // console.log(idEmpleado.id_empleado);
+    
     
     let  pedido  = {
         id_pedido:null, 
         idcliente: id[0].idcliente,
-        id_empleado : idEmpleado[0].id_empleado , //cambiar cuand0 haga el login
+        id_empleado : idEmpleado[0].id_empleados, //cambiar cuand0 haga el login
         orden_de_compra: ORDEN,
         ruta: RUTA,
         estatus: 1 ,
